@@ -7,9 +7,7 @@ class Form1(Form1Template):
     # Set Form properties and Data Bindings.
     super().__init__(**properties)
 
-    # Any code you write here will run before the form opens.
-
-  @handle("button_1", "click")
-  def button_1_click(self, **event_args):
-    """This method is called when the button is clicked"""
-    self.button_1.text = "Clicked!"
+    # This form's whole UI is the custom HTML/JS in theme/assets/standard-page.html.
+    # No native Anvil components are used, so there is nothing else to wire up here.
+    # The completion code the activity generates (QUBIT-####) is entered by the
+    # student back on the Ada page, in a string-match question, not here.
