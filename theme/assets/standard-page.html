@@ -1,17 +1,191 @@
-<div class="container">
-  <div class="box">
-    <h2>Custom HTML Template</h2>
-    <p>This is a minimal Anvil CustomHTML form. Click the button to test JavaScript is working.</p>
-    <button onclick="handleClick()">Click me</button>
-    <div id="message"></div>
+<style>
+  #curriculum02-root{
+    --navy:#1F3A5F; --teal:#2C7A7B; --amber:#E8A33D; --bg:#F7F9FB;
+    --card:#FFFFFF; --border:#D7DEE6; --good:#2E8B57; --ink:#1F2933;
+    font-family:Arial, Helvetica, sans-serif; background:var(--bg); color:var(--ink);
+    padding:24px; line-height:1.5;
+  }
+  #curriculum02-root *{box-sizing:border-box;}
+  #curriculum02-root .wrap{max-width:820px; margin:0 auto;}
+  #curriculum02-root h1{color:var(--navy); font-size:26px; margin-bottom:4px;}
+  #curriculum02-root h2{color:var(--navy); font-size:19px; border-bottom:2px solid var(--border); padding-bottom:6px; margin-top:36px;}
+  #curriculum02-root .sub{color:#556; margin-top:0;}
+  #curriculum02-root .card{background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px 20px; margin:16px 0;}
+  #curriculum02-root .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:12px 0;}
+  #curriculum02-root button{background:var(--navy); color:#fff; border:none; border-radius:7px; padding:9px 16px; font-size:14px; cursor:pointer; font-family:inherit;}
+  #curriculum02-root button:hover{background:#162c48;}
+  #curriculum02-root button.ghost{background:#fff; color:var(--navy); border:1.5px solid var(--navy);}
+  #curriculum02-root button.ghost.active{background:var(--navy); color:#fff;}
+  #curriculum02-root button.gate{background:#fff; color:var(--teal); border:1.5px solid var(--teal); font-weight:bold; width:40px; height:40px; border-radius:6px; padding:0;}
+  #curriculum02-root button.gate.active{background:var(--teal); color:#fff;}
+  #curriculum02-root .circuit{display:flex; align-items:center; gap:8px; margin:14px 0; padding:14px; background:#F3F6F9; border-radius:8px;}
+  #curriculum02-root .wire{flex:1; height:2px; background:#8896a6; position:relative;}
+  #curriculum02-root table{border-collapse:collapse; margin-top:10px; width:100%; max-width:420px;}
+  #curriculum02-root th, #curriculum02-root td{border:1px solid var(--border); padding:7px 12px; text-align:center; font-size:14px;}
+  #curriculum02-root th{background:#EEF2F6;}
+  #curriculum02-root td.filled{background:#E9F5EC; font-weight:bold;}
+  #curriculum02-root .solution{background:#FFF7E6; border:1px solid #F0D28A; border-radius:8px; padding:12px 14px; margin-top:12px; display:none; font-size:14px;}
+  #curriculum02-root .solution.show{display:block;}
+  #curriculum02-root .progress{font-size:13px; color:#556; margin-top:8px;}
+  #curriculum02-root .codebox{background:var(--navy); color:#fff; border-radius:10px; padding:20px; text-align:center; margin-top:30px; display:none;}
+  #curriculum02-root .codebox.show{display:block;}
+  #curriculum02-root .codebox .code{font-size:28px; letter-spacing:4px; font-weight:bold; margin-top:8px; color:var(--amber);}
+  #curriculum02-root .badge{display:inline-block; background:#EEF2F6; color:var(--navy); border-radius:20px; padding:2px 10px; font-size:12px; margin-left:8px; font-weight:bold;}
+  #curriculum02-root .note{font-size:13px; color:#667; font-style:italic;}
+  #curriculum02-root .bar-outer{background:#E3E8EE; border-radius:6px; height:22px; width:100%; overflow:hidden; display:flex;}
+  #curriculum02-root .bar-0{background:#8896a6; height:100%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px;}
+  #curriculum02-root .bar-1{background:var(--teal); height:100%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px;}
+  #curriculum02-root .tally{font-size:13px; color:#445; margin-top:6px;}
+</style>
+
+<div id="curriculum02-root">
+  <div class="wrap">
+
+    <h1>Quantum Curriculum</h1>
+    <p class="sub">Qubits and your first quantum gates. </p>
+
+    <div class="card">
+      <h2 style="margin-top:0; border:none;">From bits to qubits</h2>
+      <p>A quantum computer uses <strong>qubits</strong> instead of bits. Like a bit, a qubit has two measurable states, 0 and 1, but as you'll see below, it can do something a bit can't.</p>
+    </div>
+
+    <h2>The X gate</h2>
+    <div class="card">
+      <p>The X gate is the quantum version of NOT. Set the starting value, choose whether the X gate is present, then measure. Try all four combinations.</p>
+      <div class="circuit">
+        <span>Qubit:</span>
+        <button class="ghost" data-c02-x-start="0">start 0</button>
+        <button class="ghost" data-c02-x-start="1">start 1</button>
+        <div class="wire"></div>
+        <button class="gate" id="c02-xGateToggle" title="Toggle X gate">X</button>
+        <div class="wire"></div>
+        <button id="c02-xMeasure">Measure</button>
+        <span id="c02-xOutput" style="font-weight:bold;"></span>
+      </div>
+      <table>
+        <tr><th>Start</th><th>X gate?</th><th>Result</th></tr>
+        <tr><td>0</td><td>no</td><td id="c02-x-0-off">?</td></tr>
+        <tr><td>0</td><td>yes</td><td id="c02-x-0-on">?</td></tr>
+        <tr><td>1</td><td>no</td><td id="c02-x-1-off">?</td></tr>
+        <tr><td>1</td><td>yes</td><td id="c02-x-1-on">?</td></tr>
+      </table>
+      <div class="progress" id="c02-xProgress">Tested 0 of 4 rows</div>
+      <div class="solution" id="c02-xSolution">The X gate always <strong>flips</strong> the qubit: 0&nbsp;&rarr;&nbsp;1 and 1&nbsp;&rarr;&nbsp;0, every single time. No surprises yet.</div>
+    </div>
+
+    <h2>The H gate</h2>
+    <div class="card">
+      <p>Now for something a bit can't do. Apply the H (Hadamard) gate and measure the <strong>same starting value</strong> at least 10 times. Watch what happens.</p>
+      <div class="circuit">
+        <span>Qubit:</span>
+        <button class="ghost" data-c02-h-start="0">start 0</button>
+        <button class="ghost" data-c02-h-start="1">start 1</button>
+        <div class="wire"></div>
+        <div class="gate" style="background:var(--teal); color:#fff; width:40px; height:40px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:bold;">H</div>
+        <div class="wire"></div>
+        <button id="c02-hMeasure">Measure</button>
+      </div>
+      <div class="bar-outer">
+        <div class="bar-0" id="c02-bar0" style="width:50%;">0</div>
+        <div class="bar-1" id="c02-bar1" style="width:50%;">1</div>
+      </div>
+      <div class="tally" id="c02-tally">0 measurements so far</div>
+      <div class="row">
+        <button class="ghost" id="c02-hReset">Reset measurements</button>
+      </div>
+      <div class="progress" id="c02-hProgress">Take at least 10 measurements to unlock the explanation.</div>
+      <div class="solution" id="c02-hSolution">Whichever value you started from, the H gate puts the qubit into an equal <strong>superposition</strong> of 0 and 1. Every measurement is genuinely random: roughly 50% land on 0 and 50% on 1, but each individual result is still a definite 0 or 1. You never see "half a 0."</div>
+    </div>
+
+    <div class="codebox" id="c02-codebox">
+      <div>X and H gates explored. Your check-in code for Ada:</div>
+      <div class="code" id="c02-finalCode"></div>
+    </div>
+
+    <p class="note">Running as a native Anvil HTML form (theme/assets/standard-page.html), not a standalone file. Enter the code above into the matching string-match question back on Ada.</p>
+
   </div>
 </div>
 
 <script>
-  let count = 0;
+  (function(){
+    function checkAllDone(){
+      var xDone = document.getElementById('c02-xSolution').classList.contains('show');
+      var hDone = document.getElementById('c02-hSolution').classList.contains('show');
+      var codebox = document.getElementById('c02-codebox');
+      if(xDone && hDone && !codebox.classList.contains('show')){
+        codebox.classList.add('show');
+        document.getElementById('c02-finalCode').textContent = 'QUBIT-' + Math.floor(1000 + Math.random()*9000);
+      }
+    }
 
-  function handleClick() {
-    count++;
-    document.getElementById('message').textContent = 'Button clicked ' + count + ' time(s)!';
-  }
-</script>
+    // X gate
+    var xStart = null, xOn = false;
+    document.querySelectorAll('[data-c02-x-start]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        xStart = btn.getAttribute('data-c02-x-start');
+        document.querySelectorAll('[data-c02-x-start]').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+    document.getElementById('c02-xGateToggle').addEventListener('click', function(){
+      xOn = !xOn;
+      this.classList.toggle('active', xOn);
+    });
+    var xTested = new Set();
+    document.getElementById('c02-xMeasure').addEventListener('click', function(){
+      if(xStart === null){ alert('Choose a starting value first.'); return; }
+      var result = xOn ? (xStart === '0' ? '1' : '0') : xStart;
+      document.getElementById('c02-xOutput').textContent = 'Result: ' + result;
+      var key = xStart + '-' + (xOn ? 'on' : 'off');
+      var cell = document.getElementById('c02-x-' + key);
+      cell.textContent = result; cell.classList.add('filled');
+      xTested.add(key);
+      document.getElementById('c02-xProgress').textContent = 'Tested ' + xTested.size + ' of 4 rows';
+      if(xTested.size === 4){ document.getElementById('c02-xSolution').classList.add('show'); checkAllDone(); }
+    });
+
+    // H gate
+    var hStart = '0';
+    document.querySelectorAll('[data-c02-h-start]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        hStart = btn.getAttribute('data-c02-h-start');
+        document.querySelectorAll('[data-c02-h-start]').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+      });
+    });
+    var counts = {0:0, 1:0};
+    function updateBar(){
+      var total = counts[0] + counts[1];
+      var pct0 = total ? Math.round((counts[0]/total)*100) : 50;
+      var pct1 = 100 - pct0;
+      document.getElementById('c02-bar0').style.width = pct0 + '%';
+      document.getElementById('c02-bar1').style.width = pct1 + '%';
+      document.getElementById('c02-bar0').textContent = total ? (pct0 + '% (0)') : '0';
+      document.getElementById('c02-bar1').textContent = total ? (pct1 + '% (1)') : '1';
+                              document.getElementById('c02-tally').textContent = total === 0
+                              ? '0 measurements so far'
+                              : (total + ' measurement' + (total === 1 ? '' : 's') + ' so far: ' + counts[0] + ' zeros, ' + counts[1] + ' ones');
+                              if(total >= 10){
+                              document.getElementById('c02-hSolution').classList.add('show');
+                              document.getElementById('c02-hProgress').textContent = 'Explanation unlocked below.';
+                              checkAllDone();
+                              } else {
+                              document.getElementById('c02-hProgress').textContent = 'Take at least 10 measurements to unlock the explanation (' + total + '/10).';
+                              }
+                              }
+                              document.getElementById('c02-hMeasure').addEventListener('click', function(){
+                              // H|0> and H|1> both give an equal superposition, so the measurement
+                              // distribution is ~50/50 regardless of the starting value.
+                              var outcome = Math.random() < 0.5 ? 0 : 1;
+                              counts[outcome]++;
+                              updateBar();
+                              });
+                              document.getElementById('c02-hReset').addEventListener('click', function(){
+                              counts = {0:0, 1:0};
+                              document.getElementById('c02-hSolution').classList.remove('show');
+                              updateBar();
+                              });
+                              updateBar();
+                              })();
+                              </script>
