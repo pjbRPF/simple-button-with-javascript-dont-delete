@@ -1,0 +1,15 @@
+components:
+- components: []
+  layout_properties: {slot: default}
+  name: content_panel
+  properties: {visible: true}
+  type: ColumnPanel
+- layout_properties: {slot: nav-right}
+  name: navbar_links
+  properties: {}
+  type: FlowPanel
+container:
+  data_bindings: []
+  properties: {html: '@theme:standard-page.html'}
+  type: HtmlTemplate
+is_package: true

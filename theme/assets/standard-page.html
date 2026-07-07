@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="box">
+    <h2>Custom HTML Template</h2>
+    <p>This is a minimal Anvil CustomHTML form. Click the button to test JavaScript is working.</p>
+    <button onclick="handleClick()">Click me</button>
+    <div id="message"></div>
+  </div>
+</div>
+
+<script>
+  let count = 0;
+
+  function handleClick() {
+    count++;
+    document.getElementById('message').textContent = 'Button clicked ' + count + ' time(s)!';
+  }
+</script>
