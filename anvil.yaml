@@ -1,8 +1,8 @@
 allow_embedding: true
 correct_dependency_ids: {}
 dependencies: []
-metadata: {description: This app can be used to clone others as a starting point, logo_img: 'asset:Screenshot 2026-06-26 at 11.26.28.png', title: Simple Button}
-name: Clone of Simple Button with JavaScript DONT DELETE
+metadata: {description: '', logo_img: 'asset:Screenshot 2026-06-26 at 11.26.28.png', title: Bit to quibit}
+name: Bit to quibit
 package_name: Simple_Button_with_JavaScript_DONT_DELETE
 runtime_options:
   client_version: '3'

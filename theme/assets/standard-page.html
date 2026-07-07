@@ -41,7 +41,7 @@
 <div id="curriculum02-root">
   <div class="wrap">
 
-    <h1>Quantum Curriculum</h1>
+    <h1>Quantum 01</h1>
     <p class="sub">Qubits and your first quantum gates. </p>
 
     <div class="card">
@@ -101,9 +101,6 @@
       <div>X and H gates explored. Your check-in code for Ada:</div>
       <div class="code" id="c02-finalCode"></div>
     </div>
-
-    <p class="note">Running as a native Anvil HTML form (theme/assets/standard-page.html), not a standalone file. Enter the code above into the matching string-match question back on Ada.</p>
-
   </div>
 </div>
 
@@ -115,7 +112,14 @@
       var codebox = document.getElementById('c02-codebox');
       if(xDone && hDone && !codebox.classList.contains('show')){
         codebox.classList.add('show');
-        document.getElementById('c02-finalCode').textContent = 'QUBIT-' + Math.floor(1000 + Math.random()*9000);
+        const divisor = 42;
+
+        const min = Math.ceil(1000 / divisor);
+        const max = Math.floor(9999 / divisor);
+
+        const number = divisor * Math.floor(min + Math.random() * (max - min + 1));
+
+        document.getElementById('c02-finalCode').textContent = 'QUBIT-' + number;
       }
     }
 
